@@ -1,15 +1,11 @@
-# Base image - PHP with built-in server
-FROM php:8.2-cli
+FROM php:8.2-apache
 
-# Set working directory inside container
-WORKDIR /var/www/html
+COPY . /var/www/html/
 
-# Copy whole project into container
-COPY . .
+# Copy custom Apache config
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
-# Expose port (Render will use $PORT)
-EXPOSE 10000
+# Enable mod_rewrite for clean URLs
+RUN a2enmod rewrite
 
-# Start PHP built-in server
-# $PORT ay environment variable sa Render
-CMD ["sh", "-c", "php -S 0.0.0.0:$PORT -t public"]
+EXPOSE 80

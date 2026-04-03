@@ -1,0 +1,9 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Huwag i-redirect kung existing file o folder
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# I-redirect lahat sa index.php
+RewriteRule ^ index.php [QSA,L]
